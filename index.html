@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>视频播放</title>
+	<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+	<style type="text/css">
+		#vidFather{
+			width: 95%;
+			margin: 0 auto;
+			border: solid 4px black;
+		}
+		#vid{
+			width: 100%;
+		}
+		
+		#information{
+			background-color: red;
+		}
+		#time{
+			float: left;
+			width: 50%;
+		}
+		#speed{
+			float: left;
+			width: 50%;
+		}
+		#speed .speed{
+			font-size: 2em;
+		}
+		
+		.current{
+			background-color: aquamarine;
+		}
+		.duration{
+			background-color: aquamarine;
+		}
+		
+		#speedAdd{
+			margin: 0 auto;
+			width: 30%;
+			float: left;
+			text-align: center;
+		}
+		#speedAdd .speedAdd{
+			font-size: 2em;
+		}
+		
+		#btnPlay{
+			margin: 0 auto;
+			width: 40%;
+			float: left;
+			text-align: center;
+		}
+		#btnPlay .btnPlay{
+			font-size: 2.15em;
+		}
+		
+		#speedLow{
+			margin: 0 auto;
+			width: 30%;
+			float: left;
+			text-align: center;
+		}
+		#speedLow .speedLow{
+			font-size: 2em;
+		}
+		
+		
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			var video = $('#vid');
+			//控制视频开始和停止
+			$('.btnPlay').on('click', function() {
+			    if(video[0].paused) {
+			        video[0].play();
+			    }
+			    else {
+			        video[0].pause();
+			    }
+			    return false;
+			});
+			$('#vidFather').on('click', function() {
+			    if(video[0].paused) {
+			        video[0].play();
+			    }
+			    else {
+			        video[0].pause();
+			    }
+			});
+
+			var speed = 1.5;
+			var show = $('#speed .speed');
+			video[0].playbackRate = speed;
+			//增加播放速度
+			$('.speedAdd').on('click', function(){
+				speed += 0.25;
+				video[0].playbackRate = speed;
+				show.html("当前播放速度为：" + speed);
+				return false;
+			});
+			//降低播放速度
+			$('.speedLow').on('click', function(){
+				speed -= 0.25;
+				video[0].playbackRate = speed;
+				show.html("当前播放速度为：" + speed);
+				return false;
+			});
+			video.on('timeupdate', function() {
+				//获取视频当前播放时间
+			   $('.current').text(video[0].currentTime);
+			});
+			video.on('loadedmetadata', function() {
+				//获取视频总时间
+			   $('.duration').text(video[0].duration);
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div id = "vidFather">
+		<video controls = "controls" id = "vid">
+			<source src = "file:///C:/video/新建文件夹/[www.java1234.com]《一头扎进Mysql》第十三讲.mp4" type = "video/mp4" />
+			<object data = "/i/movie.mp4" width = "320" height = "240">
+		    	<embed width = "320" height = "240" src = "/i/movie.swf" />
+		  	</object>
+		</video>
+	</div>
+	<div id = "information">
+		<div id = "time">
+			<div>Current play time: <span class = "current">0</span></div>
+    		<div>Video duration: <span class = "duration"></span></div>
+		</div>
+		<div id = "speed">
+			<span class="speed">当前播放速度为：1.5</span>
+		</div>
+	</div>
+	<div>
+		<div id = "speedAdd">
+			<button class = "speedAdd">点击加速</button>
+		</div>
+		<div id = "btnPlay">
+		    <button class = "btnPlay">Play or Pause</button>
+		</div>
+		<div id = "speedLow">
+			<button class = "speedLow">点击减速</button>
+		</div>
+	</div>
+</body>
+</html>
